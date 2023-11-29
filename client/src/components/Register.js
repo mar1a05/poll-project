@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useState } from "react";
 
 
@@ -20,14 +19,7 @@ const Register = ({open}) => {
                 username,
                 password
             })
-        }).then(res => {
-
-            console.log(res);
-        })
-
-        // axios.get('http://127.0.0.1:9000/api/test').then(res => {
-        //     console.log(res);
-        // })
+        });
     }
 
     return (
