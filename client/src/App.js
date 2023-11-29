@@ -26,8 +26,8 @@ function App() {
     <div className="App">
       <Navbar />
       {
-        polls.map(poll => (
-          <Poll question={poll.question} choices={poll.choices} />
+        polls.map((poll, index) => (
+          <Poll key={index} question={poll.question} choices={poll.choices} />
         ))
       }
     </div>

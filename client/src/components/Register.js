@@ -1,20 +1,41 @@
+import axios from "axios";
+import { useState } from "react";
 
 
 const Register = ({open}) => {
+
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
 
     /**
      * Triggered when 'Create account' button has been clicked
      */
     const onCreateAccountClick = () => {
-        console.log("TODO!");
+        fetch('http://127.0.0.1:9000/api/addUser', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username,
+                password
+            })
+        }).then(res => {
+
+            console.log(res);
+        })
+
+        // axios.get('http://127.0.0.1:9000/api/test').then(res => {
+        //     console.log(res);
+        // })
     }
 
     return (
         <dialog open={open} className="register">
             <div>Register</div>
             <div style={{display: 'flex', flexDirection: 'column'}}>
-                <input type="text" placeholder="Email"/>
-                <input type="password" placeholder="Password" />
+                <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username"/>
+                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
                 <input type="password" placeholder="Confirm password"/>
             </div>
             <button onClick={onCreateAccountClick}>Create account</button>

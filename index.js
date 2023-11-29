@@ -1,5 +1,6 @@
 import express from "express";
 import mysql2 from 'mysql2';
+import cors from 'cors';
 
 const connection = mysql2.createConnection({
     user: 'avnadmin',
@@ -12,11 +13,15 @@ connection.connect((err) => {
     console.log(err);
 })
 
-connection.query("SELECT * FROM Users", (err, result, fields) => {
-    console.log("");
-})
-
 const app = express();
+app.use(cors())
+app.use(express.json());
+
+app.post('/api/addUser', (req) => {
+    const username = req.body.username;
+    const password = req.body.password;
+    connection.query(`INSERT INTO Users(username, password) VALUES ('${username}', '${password}')`);
+})
 
 const port = 9000;
 app.listen(port, () => {
