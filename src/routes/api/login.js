@@ -1,4 +1,4 @@
-import { registerUser, userExists } from '../../user.js';
+import { loginUser } from "../../user.js";
 
 export default async (req, res) => {
   const {username, password} = req.body;
@@ -8,8 +8,9 @@ export default async (req, res) => {
   }
 
   try {
-    await registerUser(username, password);
+    const accessToken = await loginUser(username, password);
+    res.json({accessToken});
   } catch (err) {
     res.status(500).send({error: String(err)})
   }
-};
+}

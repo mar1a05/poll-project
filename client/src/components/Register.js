@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAuthentification } from "../providers/AuthentificationProvider";
 
 
 const Register = ({open}) => {
@@ -6,20 +7,13 @@ const Register = ({open}) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
+    const {register} = useAuthentification();
+
     /**
      * Triggered when 'Create account' button has been clicked
      */
-    const onCreateAccountClick = () => {
-        fetch('http://127.0.0.1:9000/api/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                username,
-                password
-            })
-        });
+    const onCreateAccountClick = async () => {
+        await register(username, password);
     }
 
     return (
