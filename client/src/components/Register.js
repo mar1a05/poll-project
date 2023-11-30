@@ -10,7 +10,7 @@ const Register = ({open}) => {
      * Triggered when 'Create account' button has been clicked
      */
     const onCreateAccountClick = () => {
-        fetch('http://127.0.0.1:9000/api/addUser', {
+        fetch('http://127.0.0.1:9000/api/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
