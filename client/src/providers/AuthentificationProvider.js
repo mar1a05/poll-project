@@ -17,17 +17,17 @@ const AuthentificationProvider = ({ children }) => {
 
   /**
    * Registers a new user
-   * @param {string} username name of the user
+   * @param {string} email email of the user
    * @param {string} password password of the user
    */
-  const register = async (username, password) => {
+  const register = async (email, password) => {
     await fetch(`${URL}/api/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        username,
+        email,
         password,
       }),
     });
@@ -35,17 +35,17 @@ const AuthentificationProvider = ({ children }) => {
 
   /**
    * Logins the user with the given credentials
-   * @param {string} username name of the user
+   * @param {string} email name of the user
    * @param {string} password password of the user
    */
-  const login = async (username, password) => {
+  const login = async (email, password) => {
     const response = await fetch(`${URL}/api/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        username,
+        email,
         password,
       }),
     });

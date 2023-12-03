@@ -1,35 +1,36 @@
-import './App.css';
-import Navbar from './components/Navbar';
-import Poll from './components/Poll';
+import NavigationBar from "./components/NavigationBar";
+import Poll from "./components/Poll";
+
+import "./index.css";
 
 const polls = [
   {
     question: "Ce animal se afla pe tricourile departamentului de IT?",
-    choices: ['Un elefant', 'O testoasa', 'Un lenes', 'Un caine']
+    choices: ["Un elefant", "O testoasa", "Un lenes", "Un caine"],
   },
   {
     question: "Ce animal se afla pe tricourile departamentului de IT?",
-    choices: ['Un elefant', 'O testoasa', 'Un lenes', 'Un caine']
+    choices: ["Un elefant", "O testoasa", "Un lenes", "Un caine"],
   },
   {
     question: "Ce animal se afla pe tricourile departamentului de IT?",
-    choices: ['Un elefant', 'O testoasa', 'Un lenes', 'Un caine']
+    choices: ["Un elefant", "O testoasa", "Un lenes", "Un caine"],
   },
   {
     question: "Ce animal se afla pe tricourile departamentului de IT?",
-    choices: ['Un elefant', 'O testoasa', 'Un lenes', 'Un caine']
+    choices: ["Un elefant", "O testoasa", "Un lenes", "Un caine"],
   },
 ];
 
 function App() {
   return (
     <div className="App">
-      <Navbar />
-      {
-        polls.map((poll, index) => (
+      <NavigationBar />
+      <div style={{ display: "flex", flexWrap: "wrap" }}>
+        {polls.map((poll, index) => (
           <Poll key={index} question={poll.question} choices={poll.choices} />
-        ))
-      }
+        ))}
+      </div>
     </div>
   );
 }

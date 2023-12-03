@@ -2,14 +2,14 @@ import { getConnection } from './connection.js'
 import jwt from 'jsonwebtoken';
 
 /**
- * Returns true if the {@link username} already exists, false otherwise
- * @param {string} username name of an user 
- * @returns {Promise<boolean>} true if the {@link username} already exists, false otherwise
+ * Returns true if the {@link email} already exists, false otherwise
+ * @param {string} email name of an user 
+ * @returns {Promise<boolean>} true if the {@link email} already exists, false otherwise
  */
-export function userExists(username) {
+export function emailExists(email) {
   return new Promise(async (resolve, reject) => {
     const connection = await getConnection();
-      connection.query(`SELECT * FROM Users WHERE username = '${username}'`, (err, result) => {
+      connection.query(`SELECT * FROM Users WHERE email = '${email}'`, (err, result) => {
           if (err) {
               reject(err);
               return;
@@ -20,18 +20,18 @@ export function userExists(username) {
 }
 
 /**
-* Adds a new user with the specified username and password
-* @param {string} username name of the user
+* Adds a new user with the specified email and password
+* @param {string} email email of the user
 * @param {string} password password of the user
 */
-export async function registerUser(username, password) {
-  if (await userExists(username)) {
-      throw new Error(`The following user ${username} already exists`);
+export async function registerUser(email, password) {
+  if (await emailExists(email)) {
+      throw new Error(`The following user ${email} already exists`);
   }
 
   return new Promise(async (resolve, reject) => {
     const connection = await getConnection();
-    connection.query(`INSERT INTO Users(username, password) VALUES ('${username}', '${password}')`, (err) => {
+    connection.query(`INSERT INTO Users(email, password) VALUES ('${email}', '${password}')`, (err) => {
       if (err) {
         reject(err);
         return;
@@ -41,21 +41,22 @@ export async function registerUser(username, password) {
   });
 }
 
-export async function getUser(username) {
-  if (!await userExists(username)) {
+export async function getUser(email) {
+  if (!await emailExists(email)) {
     throw new Error("User does not exists");
   }
 
   return new Promise(async (resolve, reject) => {
     const connection = await getConnection();
-    connection.query(`SELECT * FROM Users WHERE username = '${username}'`, (err, result) => {
+    connection.query(`SELECT * FROM Users WHERE email = '${email}'`, (err, result) => {
       if (err) {
         reject(err);
         return;
       }
 
       resolve({
-        username: result[0].username,
+        id: result[0].id,
+        email: result[0].email,
         password: result[0].password
       });
     });
@@ -64,16 +65,20 @@ export async function getUser(username) {
 
 /**
  * Logins a new user and returns an access token
- * @param {string} username name of the user
+ * @param {string} email email of the user
  * @param {string} password password of the user
  * @returns 
  */
-export async function loginUser(username, password) {
-  const user = await getUser(username);
+export async function loginUser(email, password) {
+  const user = await getUser(email);
   if (password !== user.password) {
     throw new Error("Invalid password");
   }
 
   const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN);
   return accessToken;
+}
+
+export function authentificate(req, res) {
+  console.log(req.headers);
 }

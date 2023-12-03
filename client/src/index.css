@@ -2,3 +2,23 @@ body {
     background-color: aqua;
     margin: 0;
 }
+
+.poll {
+    background-color: white;
+    border-radius: 10px;
+    width: 400px;
+    padding: 20px;
+    margin: 20px;
+    box-shadow: 2px 1px 15px -1px #000000;
+}
+
+.App {
+    width: 100vw;
+    height: 100vh;
+    background-image: url("./assets/background.svg");
+    background-size: cover;
+}
+
+.register {
+    
+}
